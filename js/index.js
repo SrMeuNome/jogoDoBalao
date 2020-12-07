@@ -12,7 +12,6 @@ const initBalao = () => {
     let y = window.innerHeight//Math.floor(Math.random() * window.innerHeight) * 0.85
     balao.className = "balao"
     balao.setAttribute("style", "background-color: rgb(" + r + "," + g + "," + b + ", 0.8); left: " + x + "px" + "; top: " + y + "px")
-    balao.onload = upBalao(balao)
     balao.setAttribute("onclick", "estourarBalao(this)")
 
     reflexo.className = 'reflexoBalao'
