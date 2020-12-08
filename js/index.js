@@ -1,4 +1,18 @@
 var pts = 0
+var ptsStorage = localStorage.getItem("pts") === null ? 0 : localStorage.getItem("pts")
+var erros = 0
+var intervalBalao
+var intervalUp
+
+const iniScreen = () => {
+    var main = document.getElementById('main')
+    var intro = document.getElementById('intro')
+    var maxPts = document.getElementById("max-pts")
+
+    intro.setAttribute("style", "display: flex")
+    main.setAttribute("style", "display: none")
+    maxPts.innerHTML = "A maior pontuação foi de: " + ptsStorage + "pts"
+}
 
 const initBalao = () => {
     let gameScreen = document.getElementById('gameScreen')
@@ -9,7 +23,8 @@ const initBalao = () => {
     let g = Math.floor(Math.random() * 255)
     let b = Math.floor(Math.random() * 255)
     let x = Math.floor(Math.random() * window.innerWidth) * 0.85
-    let y = window.innerHeight//Math.floor(Math.random() * window.innerHeight) * 0.85
+    let y = window.innerHeight
+
     balao.className = "balao"
     balao.setAttribute("style", "background-color: rgb(" + r + "," + g + "," + b + ", 0.8); left: " + x + "px" + "; top: " + y + "px")
     balao.setAttribute("onclick", "estourarBalao(this)")
@@ -25,9 +40,19 @@ const initBalao = () => {
 }
 
 const gameStart = () => {
-    setInterval(initBalao, 1000)
-    setInterval(() => {
+    var main = document.getElementById('main')
+    var intro = document.getElementById('intro')
+
+    intro.setAttribute("style", "display: none")
+    main.setAttribute("style", "display: block")
+
+    //iniciando balões
+    intervalBalao = setInterval(initBalao, 1000)
+
+    //iniciando movimento dos balões
+    intervalUp = setInterval(() => {
         let baloes = document.getElementsByClassName('balao')
+
         for (let i = 0; i < baloes.length; i++) {
             upBalao(baloes[i])
         }
@@ -46,17 +71,46 @@ const upBalao = (object) => {
     //Estourar balões que passaram do limite superior da tela
     if (newY < -200) {
         gameScreen.removeChild(object)
+        endGame()
     }
 }
 
 const estourarBalao = (object) => {
     let gameScreen = document.getElementById('gameScreen')
+
     gameScreen.removeChild(object)
     countPts()
 }
 
 const countPts = () => {
     let ptsHTML = document.getElementById('pts')
+
     pts += 1
     ptsHTML.innerHTML = "Balões estourados: " + pts
+    if (pts > ptsStorage) {
+        localStorage.setItem("pts", pts)
+    }
+}
+
+const endGame = () => {
+    erros += 1
+    if (erros >= 3) {
+
+        //retornando tela principal
+        var main = document.getElementById('main')
+        var intro = document.getElementById('intro')
+        intro.setAttribute("style", "display: flex")
+        main.setAttribute("style", "display: none")
+
+        //limpando Intervals
+        clearInterval(intervalBalao)
+        clearInterval(intervalUp)
+
+        //limpando tela
+        let gameScreen = document.getElementById('gameScreen')
+        gameScreen.innerHTML = ''
+
+        //zerando erros
+        erros = 0
+    }
 }

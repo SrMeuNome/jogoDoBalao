@@ -9,9 +9,17 @@
     <title>Estourar Balões</title>
 </head>
 
-<body onload="gameStart()">
-    <h3 id="pts" class="title">Balões estourados: 0</h3>
-    <div id="gameScreen" class="balao">
+<body onload="iniScreen()">
+    <div class="container">
+        <div class="container" id="intro" style="display: flex;">
+            <h1>Bem vindo ao jogo de estourar balões!</h1>
+            <h2 id="max-pts">A maior pontuação foi de: 0pts</h2>
+            <button class="btnSky" onclick="setTimeout(gameStart, 300)">Jogar</button>
+        </div>
+        <div class="container" id="main" style="display: none;">
+            <h3 id="pts" class="title">Balões estourados: 0</h3>
+            <div id="gameScreen" class="balao"> </div>
+        </div>
     </div>
 </body>
 
