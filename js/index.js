@@ -121,7 +121,7 @@ const startUpBalao = (velocidade) => setInterval(() => {
 
 const upBalao = (object) => {
     let gameScreen = document.getElementById('gameScreen')
-    let y = parseInt(object.style.top.substring(0, object.style.top.length - 2))
+    let y = parseInt(object.style.top.replace(/[px]/))
     let newY = y - 1
     let newYStr = newY + "px"
 
