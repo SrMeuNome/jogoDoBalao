@@ -1,6 +1,13 @@
 var pts = 0
 var ptsStorage = localStorage.getItem("pts") === null ? 0 : localStorage.getItem("pts")
 var erros = 0
+
+//quanto menor mais rapido
+var velocidadeTime = 10
+
+//quanto menor mais balões
+var qtdBaloesTime = 1000
+
 var intervalBalao
 var intervalUp
 
@@ -27,7 +34,7 @@ const initBalao = () => {
 
     balao.className = "balao"
     balao.setAttribute("style", "background-color: rgb(" + r + "," + g + "," + b + ", 0.8); left: " + x + "px" + "; top: " + y + "px")
-    balao.setAttribute("onclick", "estourarBalao(this)")
+    balao.setAttribute("onmousedown", "estourarBalao(this)")
 
     reflexo.className = 'reflexoBalao'
     balao.appendChild(reflexo)
@@ -47,7 +54,7 @@ const gameStart = () => {
     main.setAttribute("style", "display: block")
 
     //iniciando balões
-    intervalBalao = setInterval(initBalao, 1000)
+    intervalBalao = setInterval(initBalao, qtdBaloesTime)
 
     //iniciando movimento dos balões
     intervalUp = setInterval(() => {
@@ -56,7 +63,70 @@ const gameStart = () => {
         for (let i = 0; i < baloes.length; i++) {
             upBalao(baloes[i])
         }
-    }, 10)
+    }, velocidadeTime)
+}
+
+const setvelocidadeTime = () => {
+    if (pts > 10) {
+        //iniciando movimento dos balões
+        clearInterval(intervalUp)
+        velocidadeTime = 7
+        intervalUp = setInterval(() => {
+            let baloes = document.getElementsByClassName('balao')
+
+            for (let i = 0; i < baloes.length; i++) {
+                upBalao(baloes[i])
+            }
+        }, velocidadeTime)
+    }
+    if (pts > 20) {
+        //iniciando movimento dos balões
+        clearInterval(intervalUp)
+        velocidadeTime = 5
+        intervalUp = setInterval(() => {
+            let baloes = document.getElementsByClassName('balao')
+
+            for (let i = 0; i < baloes.length; i++) {
+                upBalao(baloes[i])
+            }
+        }, velocidadeTime)
+    }
+    if (pts > 50) {
+        //iniciando movimento dos balões
+        clearInterval(intervalUp)
+        velocidadeTime = 3
+        intervalUp = setInterval(() => {
+            let baloes = document.getElementsByClassName('balao')
+
+            for (let i = 0; i < baloes.length; i++) {
+                upBalao(baloes[i])
+            }
+        }, velocidadeTime)
+    }
+    if (pts > 70) {
+        //iniciando movimento dos balões
+        clearInterval(intervalBalao)
+        qtdBaloesTime = 700
+        intervalBalao = setInterval(initBalao, qtdBaloesTime)
+    }
+    if (pts > 80) {
+        //iniciando movimento dos balões
+        clearInterval(intervalBalao)
+        qtdBaloesTime = 600
+        intervalBalao = setInterval(initBalao, qtdBaloesTime)
+    }
+    if (pts > 90) {
+        //iniciando movimento dos balões
+        clearInterval(intervalBalao)
+        qtdBaloesTime = 500
+        intervalBalao = setInterval(initBalao, qtdBaloesTime)
+    }
+    if (pts > 100) {
+        //iniciando movimento dos balões
+        clearInterval(intervalBalao)
+        qtdBaloesTime = 400
+        intervalBalao = setInterval(initBalao, qtdBaloesTime)
+    }
 }
 
 const upBalao = (object) => {
@@ -80,6 +150,7 @@ const estourarBalao = (object) => {
 
     gameScreen.removeChild(object)
     countPts()
+    setvelocidadeTime()
 }
 
 const countPts = () => {
@@ -111,6 +182,12 @@ const endGame = () => {
         let ptsHTML = document.getElementById('pts')
         pts = 0
         ptsHTML.innerHTML = "Balões estourados: " + pts
+
+        //rezetando velocidadeTime
+        velocidadeTime = 10
+
+        //rezetando qtdBalões
+        qtdBaloesTime = 1000
 
         //atualizando record
         ptsStorage = localStorage.getItem("pts") === null ? 0 : localStorage.getItem("pts")
