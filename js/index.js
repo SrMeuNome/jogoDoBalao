@@ -96,12 +96,6 @@ const endGame = () => {
     erros += 1
     if (erros >= 3) {
 
-        //retornando tela principal
-        var main = document.getElementById('main')
-        var intro = document.getElementById('intro')
-        intro.setAttribute("style", "display: flex")
-        main.setAttribute("style", "display: none")
-
         //limpando Intervals
         clearInterval(intervalBalao)
         clearInterval(intervalUp)
@@ -112,5 +106,16 @@ const endGame = () => {
 
         //zerando erros
         erros = 0
+
+        //zerando pontos
+        let ptsHTML = document.getElementById('pts')
+        pts = 0
+        ptsHTML.innerHTML = "Balões estourados: " + pts
+
+        //atualizando record
+        ptsStorage = localStorage.getItem("pts") === null ? 0 : localStorage.getItem("pts")
+
+        //retornando tela principal
+        iniScreen()
     }
 }
