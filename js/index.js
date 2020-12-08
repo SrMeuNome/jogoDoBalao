@@ -71,37 +71,19 @@ const setvelocidadeTime = () => {
         //iniciando movimento dos balões
         clearInterval(intervalUp)
         velocidadeTime = 7
-        intervalUp = setInterval(() => {
-            let baloes = document.getElementsByClassName('balao')
-
-            for (let i = 0; i < baloes.length; i++) {
-                upBalao(baloes[i])
-            }
-        }, velocidadeTime)
+        intervalUp = startUpBalao(velocidadeTime)
     }
     if (pts > 20) {
         //iniciando movimento dos balões
         clearInterval(intervalUp)
         velocidadeTime = 5
-        intervalUp = setInterval(() => {
-            let baloes = document.getElementsByClassName('balao')
-
-            for (let i = 0; i < baloes.length; i++) {
-                upBalao(baloes[i])
-            }
-        }, velocidadeTime)
+        intervalUp = startUpBalao(velocidadeTime)
     }
     if (pts > 50) {
         //iniciando movimento dos balões
         clearInterval(intervalUp)
         velocidadeTime = 3
-        intervalUp = setInterval(() => {
-            let baloes = document.getElementsByClassName('balao')
-
-            for (let i = 0; i < baloes.length; i++) {
-                upBalao(baloes[i])
-            }
-        }, velocidadeTime)
+        intervalUp = startUpBalao(velocidadeTime)
     }
     if (pts > 70) {
         //iniciando movimento dos balões
@@ -128,6 +110,14 @@ const setvelocidadeTime = () => {
         intervalBalao = setInterval(initBalao, qtdBaloesTime)
     }
 }
+
+const startUpBalao = (velocidade) => setInterval(() => {
+    let baloes = document.getElementsByClassName('balao')
+
+    for (let i = 0; i < baloes.length; i++) {
+        upBalao(baloes[i])
+    }
+}, velocidadeTime)
 
 const upBalao = (object) => {
     let gameScreen = document.getElementById('gameScreen')
